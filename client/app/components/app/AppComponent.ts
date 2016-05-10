@@ -1,20 +1,10 @@
-import {Component} from 'angular2/core';
-import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router'
+import {Component} from '@angular/core';
 
-import {HomeComponent} from '../home/HomeComponent'
-import {AboutComponent} from '../about/AboutComponent'
-
-@RouteConfig([
-    {path: '/', component: HomeComponent, as: 'Home'},
-    {path: '/about', component: AboutComponent, as: 'About'},
-])
 @Component({
-    selector: 'my-app',
-    template: '<router-outlet></router-outlet>',
-    directives: [ROUTER_DIRECTIVES]
+  selector: 'my-app',
+  template: '<h1>My First Angular 2 App</h1>'
 })
 export class AppComponent {
-    constructor(){
-        console.log("We are up and running!");
-    }
-}
+  constructor(){
+  console.log("We are up and running!");
+}}

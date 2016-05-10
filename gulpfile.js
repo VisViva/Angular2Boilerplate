@@ -26,11 +26,13 @@ gulp.task('build:server', function () {
 // CLIENT
 
 var jsNPMDependencies = [
-  'angular2/bundles/angular2-polyfills.js',
-  'systemjs/dist/system.src.js',
   'rxjs/bundles/Rx.js',
-  'angular2/bundles/angular2.dev.js',
-  'angular2/bundles/router.dev.js'
+  'reflect-metadata/Reflect.js',
+  'zone.js/dist/zone.js',
+  'es6-shim/es6-shim.js',
+  'systemjs/dist/system.src.js',
+  '@angular/**/*',
+  'rxjs/**/*.js'
 ]
 
 gulp.task('build:index', function(){
@@ -48,15 +50,21 @@ gulp.task('build:index', function(){
 gulp.task('build:app', function(){
   var tsProject = ts.createProject('client/tsconfig.json');
 
-  return gulp.src('client/**/*.ts')
+  var tsApp = gulp.src('client/**/*.ts')
   .pipe(sourcemaps.init())
   .pipe(ts(tsProject)).js
   .pipe(sourcemaps.write())
-  .pipe(gulp.dest('dist'))
+  .pipe(gulp.dest('dist'));
+
+  return [tsProject, tsApp];
 });
 
 gulp.task('build', function(callback){
   runSequence('clean', 'build:server', 'build:index', 'build:app', callback);
 });
 
-gulp.task('default', ['build']);
+gulp.task('update', function(callback){
+  runSequence('build:index', 'build:app', callback);
+});
+
+gulp.task('default', ['update']);
